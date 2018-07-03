@@ -7,17 +7,13 @@ class IngredientInput extends Component {
       <React.Fragment>
         Ingredient:
           <input
-            key={v4()}
-            name={"ingredientInput" + "-" + v4()}
-            value={this.props.proportions["ingredientInput" + "-" + v4()]}
+            name={"ingredientInput"}
             onChange={this.handleInputChange}
             type="text">
           </input>
         Amount:
           <input
-            key={v4()}
-            name={"ingredientAmount" + "-" + v4()}
-            value={this.props.proportions["ingredientAmount" + "-" + v4()]}
+            name={"ingredientAmount"}
             onChange={this.handleInputChange}
             type="text">
           </input>

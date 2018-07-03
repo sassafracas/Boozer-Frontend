@@ -13,11 +13,15 @@ class CocktailForm extends Component {
   }
 
   addIngredientInput = () => {
-    console.log("addIngredientInput")
+    console.log("submit");
   }
 
   removeIngredientInput = () => {
     console.log("removeIngredient");
+  }
+
+  handleSubmit = () => {
+    console.log('%c SUBMITTED', 'color: blue', this.state);
   }
 
   handleInputChange = (event) => {
@@ -46,7 +50,7 @@ class CocktailForm extends Component {
     return (
       <Segment basic floated="right" clearing>
         <h2>Create A New Cocktail</h2>
-        <Form>
+        <Form onSubmit={this.handleSubmit}>
           <Form.Field
             label="Name"
             control={Input}
@@ -71,19 +75,11 @@ class CocktailForm extends Component {
           <label>
             Ingredients
             <br></br>
-            <IngredientInputList proportions={this.state.proportions} handleInputChange={this.handleInputChange}/>
-            <Form.Group widths='equal'>
-              <Form.Field
-                control={Button}
-                onClick={this.addIngredientInput}
-                content='Add Ingredient'
-              />
-              <Form.Field
-                  control={Button}
-                  onClick={this.removeIngredientInput}
-                  content='Remove Ingredient'
-              />
-          </Form.Group>
+            <IngredientInputList
+              proportions={this.state.proportions}
+              handleInputChange={this.handleInputChange}
+              addIngredientInput={this.addIngredientInput}
+              removeIngredientInput={this.removeIngredientInput}/>
           </label>
           <br></br>
           <Button>Create Cocktail</Button>
