@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import Adapter from "../api/Adapter"
 import { v4 } from "uuid"
+import { Segment } from 'semantic-ui-react'
 
 class CocktailDetail extends Component {
 
@@ -25,7 +26,7 @@ class CocktailDetail extends Component {
   render () {
 
     return (
-      <div style={{float:"right", height:"100%", width:"37.5%"}}>
+      <Segment basic floated="left" clearing>
         <h2>{this.props.selectedCocktail.name}</h2>
         <p>{this.props.selectedCocktail.description}</p>
         <p>{this.props.selectedCocktail.instructions}</p>
@@ -33,7 +34,7 @@ class CocktailDetail extends Component {
         <ul>
           {this.state.cocktailProportions.map(ingredient => {return <li key={v4()}>{ingredient.amount} {ingredient.ingredient_name}</li>})}
         </ul>
-      </div>
+      </Segment>
     )
   }
 }

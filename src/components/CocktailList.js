@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { List, Segment } from 'semantic-ui-react'
 
 class CocktailList extends Component {
 
@@ -6,16 +7,16 @@ class CocktailList extends Component {
     return this.props.cocktails.map(
       cocktail => {
         return (
-          <li key={cocktail.id} onClick={(event) => {this.props.handleLIClick(event, cocktail.id)}}>{cocktail.name}</li>
+          <List.Item key={cocktail.id} onClick={(event) => {this.props.handleLIClick(event, cocktail.id)}}>{cocktail.name}</List.Item>
           )
         })
   }
 
   render() {
     return (
-      <ul>
-        {this.makeEachCocktail()}
-      </ul>
+
+        this.makeEachCocktail()
+
 
     )
   }

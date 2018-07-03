@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { v4 } from "uuid";
-import IngredientInput from "./IngredientInput"
+import IngredientInputList from "./IngredientInputList"
+import { Form, Input, TextArea, Button, Segment } from 'semantic-ui-react'
 
 class CocktailForm extends Component {
 
@@ -9,129 +10,85 @@ class CocktailForm extends Component {
     description: "",
     instructions: "",
     proportions: [],
-    inputs: [],
-    inputCounter: 1
-  }
-
-  componentDidMount = () => {
-    const initalInput =
-    <React.Fragment key={v4()}>
-      Ingredient:
-        <input
-          name="ingredientInput"
-          value={this.state.proportions["ingredientInput"]}
-          onChange={this.handleInputChange}
-          type="text">
-        </input>
-      Amount:
-        <input
-          name="ingredientAmount"
-          value={this.state.proportions["ingredientAmount"]}
-          onChange={this.handleInputChange}
-          type="text">
-        </input>
-      <br></br>
-    </React.Fragment>
-
-    this.setState({
-      inputs: [...this.state.inputs, initalInput]
-    })
   }
 
   addIngredientInput = () => {
-    const input =
-    <React.Fragment key={v4()}>
-      Ingredient:
-        <input
-          name={`ingredientInput${this.state.inputCounter}`}
-          value={this.state.proportions[`ingredientInput${this.state.inputCounter}`]}
-          onChange={this.handleInputChange}
-          type="text">
-        </input>
-      Amount:
-        <input
-          name={`ingredientAmount${this.state.inputCounter}`}
-          value={this.state.proportions[`ingredientAmount${this.state.inputCounter}`]}
-          onChange={this.handleInputChange}
-          type="text">
-        </input>
-      <br></br>
-    </React.Fragment>
-
-    const inputCounter = this.state.inputCounter + 1;
-    this.setState({
-      inputs: [...this.state.inputs, input],
-      inputCounter
-    })
+    console.log("addIngredientInput")
   }
 
   removeIngredientInput = () => {
-    this.setState({
-      proportions: this.state.proportions.slice(0, -2),
-      inputs: [...this.state.inputs.slice(0, -1)],
-    }, ()=> console.log("remove ingredient ", this.state))
+    console.log("removeIngredient");
   }
 
   handleInputChange = (event) => {
-    let proportionsInputs = this.state.proportions
+    let proportions = [...this.state.proportions]
     let formName = event.target.name
     let formValue = event.target.value
 
-    proportionsInputs[formName] = formValue
+    proportions[formName] = formValue
     console.log('handleInputChange', this.state.proportions);
 
     this.setState({
       // proportionsInputs,
-      proportions: proportionsInputs,
+      proportions,
     }, ()=> console.log("handle input change ", this.state))
-  }
-
-  renderIngredients = () => {
-    return (
-      <label>
-        Ingredients
-        <br></br>
-        <IngredientInput inputs={this.state.inputs} addIngredientInput={this.addIngredientInput} removeIngredientInput={this.removeIngredientInput}/>
-        <br></br>
-        <br></br>
-      </label>
-    )
   }
 
   handleChange = (event) => {
     this.setState({
       [event.target.name] : event.target.value
     }, ()=> console.log("form state ", this.state))
-
   }
+
+
 
   render () {
     return (
-      <div style={{float:"right", width: "37.5%"}}>
+      <Segment basic floated="right" clearing>
         <h2>Create A New Cocktail</h2>
-        <form>
+        <Form>
+          <Form.Field
+            label="Name"
+            control={Input}
+            value={this.state.name}
+            name="name"
+            onChange={this.handleChange}
+          />
+          <Form.Field
+            label="Description"
+            control={TextArea}
+            value={this.state.description}
+            name="description"
+            onChange={this.handleChange}
+          />
+          <Form.Field
+            label="Instructions"
+            control={TextArea}
+            value={this.state.instructions}
+            name="instructions"
+            onChange={this.handleChange}
+          />
           <label>
-            Name
+            Ingredients
             <br></br>
-            <input type="text" value={this.state.name} name="name" onChange={this.handleChange}></input>
-            <br></br>
+            <IngredientInputList proportions={this.state.proportions} handleInputChange={this.handleInputChange}/>
+            <Form.Group widths='equal'>
+              <Form.Field
+                control={Button}
+                onClick={this.addIngredientInput}
+                content='Add Ingredient'
+              />
+              <Form.Field
+                  control={Button}
+                  onClick={this.removeIngredientInput}
+                  content='Remove Ingredient'
+              />
+          </Form.Group>
           </label>
-          <label>
-            Description:
-            <br></br>
-            <textarea value={this.state.description} name="description" onChange={this.handleChange}></textarea>
-            <br></br>
-          </label>
-          <label>
-            Instructions
-            <br></br>
-            <textarea value={this.state.instructions} name="instructions" onChange={this.handleChange}></textarea>
-            <br></br>
-          </label>
-          {this.renderIngredients()}
-          <input type="submit" value="Create Cocktail"></input>
-        </form>
-      </div>
+          <br></br>
+          <Button>Create Cocktail</Button>
+        </Form>
+      </Segment>
     )
   }
 }
