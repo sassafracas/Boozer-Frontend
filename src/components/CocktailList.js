@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { List, Segment } from 'semantic-ui-react'
+import { List } from 'semantic-ui-react'
 
 class CocktailList extends Component {
 
@@ -14,10 +14,7 @@ class CocktailList extends Component {
 
   render() {
     return (
-
         this.makeEachCocktail()
-
-
     )
   }
 }

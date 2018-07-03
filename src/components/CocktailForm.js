@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { v4 } from "uuid";
-import IngredientInputList from "./IngredientInputList"
 import { Form, Input, TextArea, Button, Segment } from 'semantic-ui-react'
 
 class CocktailForm extends Component {
@@ -9,33 +8,11 @@ class CocktailForm extends Component {
     name: "",
     description: "",
     instructions: "",
-    proportions: [],
-  }
-
-  addIngredientInput = () => {
-    console.log("submit");
-  }
-
-  removeIngredientInput = () => {
-    console.log("removeIngredient");
+    ingredients: "",
   }
 
   handleSubmit = () => {
     console.log('%c SUBMITTED', 'color: blue', this.state);
-  }
-
-  handleInputChange = (event) => {
-    let proportions = [...this.state.proportions]
-    let formName = event.target.name
-    let formValue = event.target.value
-
-    proportions[formName] = formValue
-    console.log('handleInputChange', this.state.proportions);
-
-    this.setState({
-      // proportionsInputs,
-      proportions,
-    }, ()=> console.log("handle input change ", this.state))
   }
 
   handleChange = (event) => {
@@ -72,15 +49,13 @@ class CocktailForm extends Component {
             name="instructions"
             onChange={this.handleChange}
           />
-          <label>
-            Ingredients
-            <br></br>
-            <IngredientInputList
-              proportions={this.state.proportions}
-              handleInputChange={this.handleInputChange}
-              addIngredientInput={this.addIngredientInput}
-              removeIngredientInput={this.removeIngredientInput}/>
-          </label>
+          <Form.Field
+            label="Ingredients"
+            control={TextArea}
+            value={this.state.ingredients}
+            name="ingredients"
+            onChange={this.handleChange}
+          />
           <br></br>
           <Button>Create Cocktail</Button>
         </Form>

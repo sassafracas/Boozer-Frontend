@@ -3,7 +3,7 @@ import Adapter from '../api/Adapter';
 import CocktailList from "./CocktailList"
 import CocktailDetail from "./CocktailDetail"
 import CocktailForm from "./CocktailForm"
-import { List, Segment, Icon, Input, Grid, Sticky } from 'semantic-ui-react'
+import { List, Segment, Icon, Input, Grid } from 'semantic-ui-react'
 
 class CocktailContainer extends Component {
 
