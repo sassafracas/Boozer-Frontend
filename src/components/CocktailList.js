@@ -12,9 +12,7 @@ class CocktailList extends Component {
   }
 
   render() {
-    {console.log(this.props)}
     return (
-
       <ul>
         {this.makeEachCocktail()}
       </ul>

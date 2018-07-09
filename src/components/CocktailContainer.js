@@ -28,6 +28,7 @@ class CocktailContainer extends Component {
     })
   }
 
+
   render() {
 
     return (
@@ -36,7 +37,7 @@ class CocktailContainer extends Component {
         <h4>Cocktail List</h4>
         <CocktailList cocktails={this.state.cocktails} handleLIClick={this.handleLIClick}/>
       </div>
-      {this.state.selectedCocktail.hasOwnProperty("name") ? <CocktailDetail selectedCocktail={this.state.selectedCocktail}/> : null}
+      {this.state.selectedCocktail.hasOwnProperty("name") ? <CocktailDetail selectedCocktail={this.state.selectedCocktail}/> : <h4>Please select a cocktail from the left.</h4>}
       <CocktailForm />
       </React.Fragment>
     );
