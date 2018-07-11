@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import Adapter from "../api/Adapter"
+import { v4 } from "uuid"
 
 class CocktailDetail extends Component {
 
@@ -30,7 +31,7 @@ class CocktailDetail extends Component {
         <p>{this.props.selectedCocktail.instructions}</p>
         <h3>Ingredients</h3>
         <ul>
-          {this.state.cocktailProportions.map(ingredient => {return <li>{ingredient.amount} {ingredient.ingredient_name}</li>})}
+          {this.state.cocktailProportions.map(ingredient => {return <li key={v4()}>{ingredient.amount} {ingredient.ingredient_name}</li>})}
         </ul>
       </div>
     )

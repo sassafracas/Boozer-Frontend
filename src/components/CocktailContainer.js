@@ -9,6 +9,7 @@ class CocktailContainer extends Component {
   state = {
     cocktails: [],
     selectedCocktail: {},
+    searchTerm: "",
   }
 
   componentDidMount() {
@@ -28,14 +29,25 @@ class CocktailContainer extends Component {
     })
   }
 
+  handleSearchChange = (event) => {
+    this.setState({
+      searchTerm: event.target.value
+    })
+  }
+
+  filterCocktailList = () => {
+    return this.state.cocktails.filter(cocktail => {return cocktail.name.toUpperCase().includes(this.state.searchTerm.toUpperCase())})
+  }
 
   render() {
-
+    this.filterCocktailList()
     return (
       <React.Fragment>
       <div style={{float:"left", overflow:"scroll", height:"100%", position:"fixed", width: "25%"}}>
         <h4>Cocktail List</h4>
-        <CocktailList cocktails={this.state.cocktails} handleLIClick={this.handleLIClick}/>
+        <h5>Search Cocktails:</h5>
+        <input type="text" value={this.state.searchTerm} onChange={this.handleSearchChange} placeholder="Enter Cocktail Name Here"/>
+        <CocktailList cocktails={this.filterCocktailList()} handleLIClick={this.handleLIClick}/>
       </div>
       {this.state.selectedCocktail.hasOwnProperty("name") ? <CocktailDetail selectedCocktail={this.state.selectedCocktail}/> : <h4>Please select a cocktail from the left.</h4>}
       <CocktailForm />
