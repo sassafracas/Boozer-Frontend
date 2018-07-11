@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { v4 } from "uuid";
+import IngredientInput from "./IngredientInput"
 
 class CocktailForm extends Component {
 
@@ -7,26 +8,82 @@ class CocktailForm extends Component {
     name: "",
     description: "",
     instructions: "",
-    proportions: [{}],
-    inputs: []
+    proportions: [],
+    inputs: [],
+    inputCounter: 1
+  }
+
+  componentDidMount = () => {
+    const initalInput =
+    <React.Fragment key={v4()}>
+      Ingredient:
+        <input
+          name="ingredientInput"
+          value={this.state.proportions["ingredientInput"]}
+          onChange={this.handleInputChange}
+          type="text">
+        </input>
+      Amount:
+        <input
+          name="ingredientAmount"
+          value={this.state.proportions["ingredientAmount"]}
+          onChange={this.handleInputChange}
+          type="text">
+        </input>
+      <br></br>
+    </React.Fragment>
+
+    this.setState({
+      inputs: [...this.state.inputs, initalInput]
+    })
   }
 
   addIngredientInput = () => {
     const input =
     <React.Fragment key={v4()}>
-      Ingredient:<input type="text"></input> Amount:<input type="text"></input>
+      Ingredient:
+        <input
+          name={`ingredientInput${this.state.inputCounter}`}
+          value={this.state.proportions[`ingredientInput${this.state.inputCounter}`]}
+          onChange={this.handleInputChange}
+          type="text">
+        </input>
+      Amount:
+        <input
+          name={`ingredientAmount${this.state.inputCounter}`}
+          value={this.state.proportions[`ingredientAmount${this.state.inputCounter}`]}
+          onChange={this.handleInputChange}
+          type="text">
+        </input>
       <br></br>
     </React.Fragment>
 
+    const inputCounter = this.state.inputCounter + 1;
     this.setState({
-      inputs: [...this.state.inputs, input]
-    }, ()=> console.log("form state ", this.state.inputs))
+      inputs: [...this.state.inputs, input],
+      inputCounter
+    })
   }
 
   removeIngredientInput = () => {
     this.setState({
-      inputs: [...this.state.inputs.slice(1)]
-    }, ()=> console.log("form state ", this.state.inputs))
+      proportions: this.state.proportions.slice(0, -2),
+      inputs: [...this.state.inputs.slice(0, -1)],
+    }, ()=> console.log("remove ingredient ", this.state))
+  }
+
+  handleInputChange = (event) => {
+    let proportionsInputs = this.state.proportions
+    let formName = event.target.name
+    let formValue = event.target.value
+
+    proportionsInputs[formName] = formValue
+    console.log('handleInputChange', this.state.proportions);
+
+    this.setState({
+      // proportionsInputs,
+      proportions: proportionsInputs,
+    }, ()=> console.log("handle input change ", this.state))
   }
 
   renderIngredients = () => {
@@ -34,11 +91,7 @@ class CocktailForm extends Component {
       <label>
         Ingredients
         <br></br>
-        Ingredient:<input type="text"></input> Amount:<input  type="text"></input>
-        <br></br>
-        {this.state.inputs.map(input => {return input})}
-        <br></br>
-        <input type="button" onClick={this.addIngredientInput} value="Add Ingredient"></input> <input type="button" onClick={this.removeIngredientInput} value="Remove Ingredient"></input>
+        <IngredientInput inputs={this.state.inputs} addIngredientInput={this.addIngredientInput} removeIngredientInput={this.removeIngredientInput}/>
         <br></br>
         <br></br>
       </label>
